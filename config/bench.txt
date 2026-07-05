@@ -1,0 +1,14 @@
+[YouTube]
+# 格式: 频道名称 = 频道的原始URL 或 频道@Handle
+itch_io = https://www.youtube.com/@itchiogames
+ai_search = https://www.youtube.com/@theAIsearch
+
+[Reddit]
+# 格式: 别名 = 子版块名称
+ai_board = r/artificial
+gaming_board = r/gaming
+
+[Xiaohongshu]
+# 格式: 别名 = 搜索关键词
+keyword_1 = AI工具
+keyword_2 = 独立游戏
