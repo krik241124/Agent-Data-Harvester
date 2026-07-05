@@ -14,9 +14,14 @@ import urllib.error
 # 引入多线程并发，解决 Timeout 问题！
 import concurrent.futures
 
-WORKSPACE_DIR = os.path.dirname(os.path.abspath(__file__))
-DB_FILE = os.path.join(WORKSPACE_DIR, "sitemap_monitor.db")
-TARGETS_FILE = os.path.join(WORKSPACE_DIR, "targets.txt") 
+# 获取当前脚本所在目录 (core/)
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+# 获取项目根目录 (向上推一级)
+PROJECT_ROOT = os.path.dirname(SCRIPT_DIR)
+# 动态拼接配置与输出路径
+DB_FILE = os.path.join(PROJECT_ROOT, "sitemap_monitor.db")
+TARGETS_FILE = os.path.join(PROJECT_ROOT, "config", "targets.txt")
+
 REQUEST_TIMEOUT = 15 # 每个请求的超时缩短，防止个别死链拖慢全局
 USER_AGENT = "Mozilla/5.0 (compatible; bench-read-agent/1.0; +https://openclaw.ai/)"
 MAX_JSON_ITEMS = 50 
@@ -143,7 +148,7 @@ def generate_reports(conn, new_pages_today, removed_pages_today, current_time_st
     sorted_removed = sorted(removed_kw_map.items(), key=lambda x: x[1], reverse=True)
     sorted_global = sorted(global_kw_counts.items(), key=lambda x: x[1], reverse=True)
 
-    txt_pattern = os.path.join(WORKSPACE_DIR, "????-??-??.txt")
+    txt_pattern = os.path.join(PROJECT_ROOT, "????-??-??.txt")
     existing_txts = sorted(glob.glob(txt_pattern))
     last_scan_time = "First Scan"
     if existing_txts:
@@ -151,7 +156,7 @@ def generate_reports(conn, new_pages_today, removed_pages_today, current_time_st
         last_scan_time = datetime.datetime.fromtimestamp(mtime, datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
     date_str = datetime.datetime.now().strftime("%Y-%m-%d")
-    txt_filename = os.path.join(WORKSPACE_DIR, f"{date_str}.txt")
+    txt_filename = os.path.join(PROJECT_ROOT, f"{date_str}.txt")
     
     with open(txt_filename, 'w', encoding='utf-8') as f:
         f.write(f"=== Bench Read Report: {current_time_str} ===\n\n")
