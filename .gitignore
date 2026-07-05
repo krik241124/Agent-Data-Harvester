@@ -1,0 +1,21 @@
+# Python 运行缓存与虚拟环境
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.venv/
+env/
+
+# 环境变量与敏感文件
+.env
+*.log
+
+# 项目自动生成的本地增量数据库（禁止上传）
+*.db
+*.sqlite3
+sitemap_monitor.db
+
+# 项目自动生成的爬虫报告与 JSON 数据（禁止上传）
+202*.txt
+youtube_social_read_*.json
+*.csv
