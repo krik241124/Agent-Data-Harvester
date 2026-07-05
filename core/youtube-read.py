@@ -6,8 +6,12 @@ from googleapiclient.discovery import build
 
 # ================= 配置区域 =================
 API_KEY = "YOUR_API_KEY_HERE"
-BENCH_FILE = "bench.txt"
 
+# 动态定位项目根目录
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+PROJECT_ROOT = os.path.dirname(SCRIPT_DIR)
+
+BENCH_FILE = os.path.join(PROJECT_ROOT, "config", "bench.txt")
 # 获取今天和7天前的时间边界 (RFC 3339 格式)
 NOW = datetime.now(timezone.utc)
 SEVEN_DAYS_AGO = (NOW - timedelta(days=7)).isoformat()
@@ -113,7 +117,7 @@ def main():
 
     # 4. 导出 JSON
     date_str = NOW.strftime("%Y%m%d")
-    output_filename = f"youtube_social_read_{date_str}.json"
+    output_filename = os.path.join(PROJECT_ROOT, f"youtube_social_read_{date_str}.json")
     
     with open(output_filename, 'w', encoding='utf-8') as f:
         json.dump(all_videos_data, f, ensure_ascii=False, indent=2)
